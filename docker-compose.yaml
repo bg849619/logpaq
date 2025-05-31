@@ -1,0 +1,15 @@
+services:
+  angular-workspace:
+    build:
+      context: .
+      dockerfile: ./.devcontainer/angular-container/Dockerfile
+    volumes:
+    - .:/workspace
+    command: sleep infinity
+    ports:
+    - 4000:4000
+    - 4200:4200
+    - 4433:4433
+    - 5000:5000
+    - 8000:8000
+    - 9876:9876

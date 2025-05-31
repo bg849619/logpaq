@@ -1,0 +1,7 @@
+{
+    "name": "Angular container",
+    "dockerComposeFile": ["../../docker-compose.yaml"],
+    "service": "angular-workspace",
+    "shutdownAction": "none",
+    "workspaceFolder": "/workspace/frontend"
+}
