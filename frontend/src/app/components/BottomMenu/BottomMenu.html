@@ -1,10 +1,10 @@
 <div class="bottom-panel">
     <div class="pill-group">
-        <span class="pill social-links">
-        W8P
+        <span class="pill social-links" (click)="this.openLogConfigMenu()">
+        {{ this.LogConfig.callsign || 'SET CALL' }}
         </span>
-        <span class="pill social-links">
-        4A OH
+        <span class="pill social-links" (click)="this.openLogConfigMenu()">
+        {{ this.LogConfig.class || '??'}} {{ this.LogConfig.section || '??' }}
         </span>
     </div>
     <div class="center-text">
@@ -13,13 +13,13 @@
     </div>
     <div class="pill-group">
         <span class="pill social-links">
-        KE8PAQ
+        {{ this.StationConfig.operator || 'SET OP'}}
         </span>
         <span class="pill social-links">
-        40M
+        {{ this.StationConfig.band || '??' }}
         </span>
         <span class="pill social-links">
-        PH
+        {{ this.StationConfig.mode || '??' }}
         </span>
     </div>
 </div>

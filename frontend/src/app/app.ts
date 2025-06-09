@@ -4,10 +4,10 @@ import { BottomMenu } from './components/BottomMenu/BottomMenu';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, BottomMenu],
+  imports: [RouterOutlet, BottomMenu, /*BrowserAnimationsModule*/],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected title = 'dumbass';
+  protected title = 'LogPAQ';
 }
