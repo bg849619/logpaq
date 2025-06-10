@@ -1,10 +1,11 @@
-<div class="modal-content">
+<form class="modal-content" (ngSubmit)="dialogRef.close(data)">
     <header>Configure Log</header>
     <label>Callsign</label>
-    <input type="text" placeholder="Log Callsign" [(ngModel)]="data.callsign" />
+    <input type="text" name="callsign" placeholder="Log Callsign" [(ngModel)]="data.callsign" />
     <label>Station Class</label>
-    <input type="text" placeholder="Class" [(ngModel)]="data.class"/>
+    <input type="text" name="class" placeholder="Class" [(ngModel)]="data.class"/>
     <label>Station Section</label>
-    <input type="text" placeholder="Section" [(ngModel)]="data.section"/>
-    <button [mat-dialog-close]="data">Ok</button>
-</div>
+    <input type="text" name="section" placeholder="Section" [(ngModel)]="data.section"/>
+    <button [mat-dialog-close]="data" class="ok">Submit</button>
+    <button [mat-dialog-close] class="cancel">Cancel</button>
+</form>

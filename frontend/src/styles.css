@@ -22,3 +22,20 @@ input {
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+button {
+    padding: 8px;
+    margin: 5px 5px 5px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+button.ok {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+button.cancel {
+    background-color: #f44336; /* Red */
+    color: white;
+}

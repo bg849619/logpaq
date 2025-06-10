@@ -5,7 +5,8 @@ import { EnumBand, EnumMode } from '../../types';
   providedIn: 'root'
 })
 export class StationConfigService {
-  operator: string = 'KE8PAQ'; // PLACEHOLDER
+  callsign: string = 'KE8PAQ'; // PLACEHOLDER
+  name: string = 'Test Station'; // PLACEHOLDER
   band: EnumBand = EnumBand.M80; // Default band
   mode: EnumMode = EnumMode.SSB; // Default mode
 
@@ -13,14 +14,16 @@ export class StationConfigService {
 
   getStationConfig() {
     return {
-      operator: this.operator,
+      callsign: this.callsign,
+      name: this.name,
       band: this.band,
       mode: this.mode
     };
   }
 
-  setStationConfig(operator: string, band: EnumBand, mode: EnumMode) {
-    this.operator = operator;
+  setStationConfig(callsign: string, name: string, band: EnumBand, mode: EnumMode) {
+    this.callsign = callsign;
+    this.name = name;
     this.band = band;
     this.mode = mode;
   }

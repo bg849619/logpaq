@@ -1,0 +1,7 @@
+<select class="pill social-links" name="band" [(ngModel)]="this.selectedMode" (ngModelChange)="this.onModeChange()">
+    @for (key of this.modes; track key) {
+        <option [value]="key">
+            {{ key }}
+        </option>
+    }
+</select>

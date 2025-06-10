@@ -12,14 +12,10 @@
         <a href="https://github.com/bg849619/logpaq" target="_blank">github.com/bg849619/logpaq</a>
     </div>
     <div class="pill-group">
-        <span class="pill social-links">
-        {{ this.StationConfig.operator || 'SET OP'}}
+        <span class="pill social-links" (click)="this.openOperatorDialog()">
+        {{ this.StationConfig.callsign || 'SET OP'}}
         </span>
-        <span class="pill social-links">
-        {{ this.StationConfig.band || '??' }}
-        </span>
-        <span class="pill social-links">
-        {{ this.StationConfig.mode || '??' }}
-        </span>
+        <app-band-selector></app-band-selector>
+        <app-mode-selector></app-mode-selector>
     </div>
 </div>

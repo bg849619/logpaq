@@ -4,7 +4,7 @@ export enum EnumBand {
     M40 = "40m",
     M20 = "20m",
     M15 = "15m",
-    M10 = "M10",
+    M10 = "10m",
     M6 = "6m",
     M2 = "2m",
     M125 = "1.25m",
@@ -26,7 +26,8 @@ export interface LogConfig {
 }
 
 export interface StationConfig {
-    operator: string;
+    callsign: string;
+    name: string;
     band: EnumBand;
     mode: EnumMode;
 }

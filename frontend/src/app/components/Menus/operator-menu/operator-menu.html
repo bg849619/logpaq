@@ -1,0 +1,9 @@
+<form class="modal-content" (ngSubmit)="dialogRef.close(data)">
+    <header>Set Operator</header>
+    <label>Operator Callsign</label>
+    <input type="text" name="callsign" placeholder="Operator Callsign" [(ngModel)]="data.callsign" />
+    <label>Operator Name</label>
+    <input type="text" name="name" placeholder="Operator Name" [(ngModel)]="data.name"/>
+    <button type="submit" class="ok">Submit</button>
+    <button [mat-dialog-close] class="cancel">Cancel</button>
+</form>
