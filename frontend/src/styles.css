@@ -21,6 +21,8 @@ input {
 
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    height: calc(100vh - 55px);
 }
 
 button {

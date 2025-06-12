@@ -1,0 +1,31 @@
+.horizontal-section {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.horizontal-section-full {
+    flex: fill;
+}
+
+.horizontal-section-main {
+    flex: 1.5;
+    height: 1px;
+}
+
+.horizontal-section-bottom {
+    flex: 1;
+}
+
+.vertical-section-main {
+    flex: 2;
+}
+
+.vertical-section-side {
+    flex: 1;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}

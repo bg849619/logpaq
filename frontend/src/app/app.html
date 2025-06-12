@@ -54,7 +54,7 @@
 
   main {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,18 +104,22 @@
 </style>
 
 <main class="main">
-  <div>
-    Contacts List
+  <div class="horizontal-section-full">
+    Context-Bar
   </div>
-  <div>
-    Statistics
+  <div class="horizontal-section horizontal-section-main">
+    <app-contact-list class="vertical-section-main"></app-contact-list>
+    <div class="vertical-section-side">
+      Statistics
+    </div>
   </div>
-  <div>
-    New Contact
-  </div>
-  <div>
-    Sections
+  <div class="horizontal-section horizontal-section-bottom">
+    <div class="vertical-section-main">
+      New Contact
+    </div>
+    <div class="vertical-section-side">
+      Sections
+    </div>
   </div>
   <app-bottom-menu></app-bottom-menu>
 </main>
-<router-outlet />

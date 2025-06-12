@@ -1,0 +1,32 @@
+<div class="contacts">
+    <table>
+        <thead>
+            <tr>
+            <th>Callsign</th>
+            <th>Class</th>
+            <th>Section</th>
+            <th class="time">Time</th>
+            <th>Band</th>
+            <th>Mode</th>
+            <th>Operator</th>
+            <th>Name</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody class="contact-table">
+            @for (i of contacts; track i) {
+                <tr>
+                    <td>{{i.callsign}}</td>
+                    <td>{{i.class}}</td>
+                    <td>{{i.section}}</td>
+                    <td class="time">6/12/25 22:54Z</td>
+                    <td>{{i.band}}</td>
+                    <td>{{i.mode}}</td>
+                    <td>{{i.operator}}</td>
+                    <td>{{i.op_name}}</td>
+                    <td>(E) (D)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
