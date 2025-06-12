@@ -38,3 +38,17 @@
 .pill:hover {
     background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
 }
+
+.pill.warn {
+    --pill-accent: #ffd000;
+    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
+}
+
+option.warn {
+    background-color: #ffd000;
+}
+
+option {
+    background-color: gray;
+    color: black;
+}

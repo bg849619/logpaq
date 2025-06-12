@@ -6,6 +6,7 @@
     <input type="text" name="class" placeholder="Class" [(ngModel)]="data.class"/>
     <label>Station Section</label>
     <input type="text" name="section" placeholder="Section" [(ngModel)]="data.section"/>
+    <p class="warn">This will set the configuration for <b>all</b> users in this log</p>
     <button [mat-dialog-close]="data" class="ok">Submit</button>
     <button [mat-dialog-close] class="cancel">Cancel</button>
 </form>

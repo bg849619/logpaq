@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 import { StationConfigService } from '../../../services/station-config';
 import { EnumBand } from '../../../../types';
 
 @Component({
   selector: 'app-band-selector',
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass],
   templateUrl: './band-selector.html',
   styleUrl: './band-selector.css'
 })
