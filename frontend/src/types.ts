@@ -31,3 +31,12 @@ export interface StationConfig {
     band: EnumBand;
     mode: EnumMode;
 }
+
+export interface Contact {
+    callsign: string;
+    band: EnumBand;
+    mode: EnumMode;
+    time: Date;
+    operator: string;
+    op_name: string;
+}
