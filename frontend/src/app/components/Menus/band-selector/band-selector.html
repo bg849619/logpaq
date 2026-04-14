@@ -1,7 +1,0 @@
-<select class="pill social-links" name="band" [(ngModel)]="this.selectedBand" (ngModelChange)="onBandChange()">
-    @for (key of bands; track key) {
-        <option [value]="key">
-            {{ key }}
-        </option>
-    }
-</select>
