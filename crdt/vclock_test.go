@@ -53,7 +53,14 @@ func TestDelta(t *testing.T) {
 
 	delta := vc1.Delta(vc2)
 
-	if delta["node-a"] != 2 || delta["node-b"] != 0 {
+	// Shows that VC1 is up to 2 events (1 ahead) for node-b compared to VC2.
+	if delta["node-a"] != 0 || delta["node-b"] != 2 {
 		t.Errorf("Delta calculation is incorrect, got: %v", delta)
+	}
+
+	// Shows that VC2 is up to 3 events (2 ahead) for node-a compared to VC1.
+	delta2 := vc2.Delta(vc1)
+	if delta2["node-a"] != 3 || delta2["node-b"] != 0 {
+		t.Errorf("Delta calculation is incorrect, got: %v", delta2)
 	}
 }
