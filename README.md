@@ -9,4 +9,6 @@ A distributed contact logger with weak-consistency. Logging nodes reach eventual
 
 ## AI Usage
 
-- Claude and GitHub Copilot were used in the architecture/design of the logging engine. However, they did not generate any code *directly*. LLMs were treated as consultants to this software, and their outputs were refined further given design constraints and edge cases.
+Claude and GitHub Copilot were used in the architecture/design of this application, and often used to create boilerplate for the implementation of that architecture. It is the intention of the developers to understand and verify the LLM output used. Output is continually refined as the models are consulted regarding their initial solution, until a high quality implementation is achieved.
+
+Agent use has been scope-limited to smaller software components to increase the likelihood of a high-quality solution and to make it easier for developers to validate output within the larger architecture.
