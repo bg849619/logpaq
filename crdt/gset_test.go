@@ -376,3 +376,126 @@ func TestTimestampExtraction(t *testing.T) {
 		t.Errorf("Expected timestamp between %d and %d, got %d", beforeTime, afterTime+1, timestamp)
 	}
 }
+
+func TestGSetThreeNodeTransitiveSync(t *testing.T) {
+	gset1 := NewContactGSet("node1")
+	gset2 := NewContactGSet("node2")
+	gset3 := NewContactGSet("node3")
+
+	contact1 := Contact{Callsign: "W1AAA", Band: "20M", Mode: "CW", Timestamp: 1000}
+	contact2 := Contact{Callsign: "W2BBB", Band: "40M", Mode: "SSB", Timestamp: 2000}
+	contact3 := Contact{Callsign: "W3CCC", Band: "15M", Mode: "DIGI", Timestamp: 3000}
+
+	gset1.Add(contact1)
+	gset2.Add(contact2)
+	gset3.Add(contact3)
+
+	// Sync node1 with node2, then node2 with node3 (transitive path).
+	gset1 = gset1.Merge(gset2)
+	gset2 = gset2.Merge(gset1)
+	gset2 = gset2.Merge(gset3)
+	gset3 = gset3.Merge(gset2)
+
+	// Final convergence round across all nodes.
+	gset1 = gset1.Merge(gset2)
+	gset3 = gset3.Merge(gset1)
+	gset1 = gset1.Merge(gset3)
+	gset2 = gset2.Merge(gset3)
+
+	sets := []*GSet[Contact]{gset1, gset2, gset3}
+	for i, gs := range sets {
+		if gs.Size() != 3 {
+			t.Fatalf("node%d expected size 3 after transitive sync, got %d", i+1, gs.Size())
+		}
+		if !gs.Contains(contact1) || !gs.Contains(contact2) || !gs.Contains(contact3) {
+			t.Fatalf("node%d missing one or more contacts after transitive sync", i+1)
+		}
+		if gs.VClock["node1"] != 1 || gs.VClock["node2"] != 1 || gs.VClock["node3"] != 1 {
+			t.Fatalf("node%d expected merged vector clock {node1:1,node2:1,node3:1}, got %v", i+1, gs.VClock)
+		}
+	}
+}
+
+func TestGSetDivergeAndResyncNoDuplicates(t *testing.T) {
+	gset1 := NewContactGSet("node1")
+	gset2 := NewContactGSet("node2")
+
+	contactA := Contact{Callsign: "K1AAA", Band: "20M", Mode: "CW", Timestamp: 1000}
+	contactB := Contact{Callsign: "K2BBB", Band: "40M", Mode: "SSB", Timestamp: 2000}
+	contactC := Contact{Callsign: "K3CCC", Band: "15M", Mode: "DIGI", Timestamp: 3000}
+	contactD := Contact{Callsign: "K4DDD", Band: "10M", Mode: "CW", Timestamp: 4000}
+
+	// Initial divergence: each side gets a unique contact.
+	gset1.Add(contactA)
+	gset2.Add(contactB)
+
+	// First sync.
+	gset1 = gset1.Merge(gset2)
+	gset2 = gset2.Merge(gset1)
+
+	if gset1.Size() != 2 || gset2.Size() != 2 {
+		t.Fatalf("expected size 2 on both nodes after first sync, got node1=%d node2=%d", gset1.Size(), gset2.Size())
+	}
+
+	// Diverge again after syncing.
+	gset1.Add(contactC)
+	gset2.Add(contactD)
+
+	// Resync and verify convergence with no duplicate growth.
+	gset1 = gset1.Merge(gset2)
+	gset2 = gset2.Merge(gset1)
+
+	if gset1.Size() != 4 || gset2.Size() != 4 {
+		t.Fatalf("expected size 4 on both nodes after resync, got node1=%d node2=%d", gset1.Size(), gset2.Size())
+	}
+
+	// Repeated sync must be stable (idempotent across peers).
+	gset1 = gset1.Merge(gset2)
+	gset2 = gset2.Merge(gset1)
+
+	if gset1.Size() != 4 || gset2.Size() != 4 {
+		t.Fatalf("expected stable size 4 after repeated resync, got node1=%d node2=%d", gset1.Size(), gset2.Size())
+	}
+
+	for _, c := range []Contact{contactA, contactB, contactC, contactD} {
+		if !gset1.Contains(c) || !gset2.Contains(c) {
+			t.Fatalf("missing expected contact after resync: %+v", c)
+		}
+	}
+
+	if gset1.VClock["node1"] != gset2.VClock["node1"] || gset1.VClock["node2"] != gset2.VClock["node2"] {
+		t.Fatalf("expected synced vector clocks after resync, got node1=%v node2=%v", gset1.VClock, gset2.VClock)
+	}
+}
+
+func TestGSetIsolatedNodeWithEmptyPeer(t *testing.T) {
+	active := NewContactGSet("node1")
+	empty := NewContactGSet("node2")
+
+	contact := Contact{Callsign: "N0ISO", Band: "80M", Mode: "CW", Timestamp: 1234}
+	if !active.Add(contact) {
+		t.Fatal("expected add on isolated node to succeed")
+	}
+
+	if active.Size() != 1 {
+		t.Fatalf("expected active node size 1 before any sync, got %d", active.Size())
+	}
+
+	// Sync with empty peer should preserve active node and populate peer.
+	active = active.Merge(empty)
+	empty = empty.Merge(active)
+
+	if !active.Contains(contact) {
+		t.Fatal("active node lost data after syncing with empty peer")
+	}
+	if !empty.Contains(contact) {
+		t.Fatal("empty peer did not receive data after sync")
+	}
+	if active.Size() != 1 || empty.Size() != 1 {
+		t.Fatalf("expected both sets size 1 after sync, got active=%d empty=%d", active.Size(), empty.Size())
+	}
+
+	if active.VClock["node1"] != 1 || empty.VClock["node1"] != 1 {
+		t.Fatalf("expected node1 vector clock to remain 1 on both nodes, got active=%v empty=%v", active.VClock, empty.VClock)
+	}
+}
