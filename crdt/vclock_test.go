@@ -1,4 +1,4 @@
-package crdt
+package logpaq
 
 import "testing"
 

@@ -1,4 +1,4 @@
-package crdt
+package logpaq
 
 import "fmt"
 
@@ -16,7 +16,7 @@ func (f LWWField[T]) Merge(other LWWField[T]) LWWField[T] {
 	if f.Timestamp > other.Timestamp {
 		return f
 	}
-	
+
 	// Same timestamp, use node ID for deterministic tie-breaking
 	if f.NodeID <= other.NodeID {
 		return f
