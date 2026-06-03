@@ -1,4 +1,4 @@
-package logpaq
+package crdt
 
 import (
 	"fmt"
