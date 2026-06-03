@@ -11,13 +11,10 @@ type Contact struct {
 	Band      string `json:"band"`
 	Mode      string `json:"mode"`
 	Timestamp uint64 `json:"timestamp"`
-	// Exchange stores contest-specific exchange data as key-value pairs
-	// Examples:
-	//   Field Day: {"class": "2A", "section": "CA"}
-	//   Sweepstakes: {"serial": "123", "precedence": "A", "check": "85", "section": "CA"}
-	//   CQ WW: {"zone": "5"}
-	// This exchange schema is intentionally flexible to accommodate various contest formats without needing to change the underlying data structure.
-	Exchange map[string]string `json:"exchange,omitempty"`
+	// SentExchange stores the exchange sent to the other station.
+	SentExchange map[string]string `json:"sent_exchange,omitempty"`
+	// ReceivedExchange stores the exchange received from the other station.
+	ReceivedExchange map[string]string `json:"rcvd_exchange,omitempty"`
 	// ExtensionData allows for additional fields that are not vital to the contact itself. I.e. operator, notes, etc.
 	ExtensionData map[string]string `json:"extension_data,omitempty"`
 }
@@ -27,14 +24,23 @@ func EqualContact(c1, c2 Contact) bool {
 		return false
 	}
 
-	// Check Exchange maps for equality
-	if len(c1.Exchange) != len(c2.Exchange) {
-		return false
-	}
-	for key, value := range c1.Exchange {
-		if c2.Exchange[key] != value {
+	compareMaps := func(left, right map[string]string) bool {
+		if len(left) != len(right) {
 			return false
 		}
+		for key, value := range left {
+			if right[key] != value {
+				return false
+			}
+		}
+		return true
+	}
+
+	if !compareMaps(c1.SentExchange, c2.SentExchange) {
+		return false
+	}
+	if !compareMaps(c1.ReceivedExchange, c2.ReceivedExchange) {
+		return false
 	}
 
 	// Check ExtensionData maps for equality

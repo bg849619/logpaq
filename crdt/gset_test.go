@@ -26,11 +26,12 @@ func TestGSetAdd(t *testing.T) {
 	gset := NewContactGSet("node1")
 
 	contact := Contact{
-		Callsign:  "W1ABC",
-		Band:      "20M",
-		Mode:      "CW",
-		Timestamp: uint64(time.Now().Unix()),
-		Exchange:  map[string]string{"rst": "599"},
+		Callsign:         "W1ABC",
+		Band:             "20M",
+		Mode:             "CW",
+		Timestamp:        uint64(time.Now().Unix()),
+		SentExchange:     map[string]string{"rst": "599", "section": "CT"},
+		ReceivedExchange: map[string]string{"rst": "599", "section": "CT"},
 	}
 
 	// First add should succeed
@@ -236,11 +237,12 @@ func TestGSetVectorClockSync(t *testing.T) {
 func TestContactKeysConsistent(t *testing.T) {
 	// Same contact should generate same key regardless of node
 	contact := Contact{
-		Callsign:  "W1ABC",
-		Band:      "20M",
-		Mode:      "cw", // lowercase to test case normalization
-		Timestamp: 1000,
-		Exchange:  map[string]string{"rst": "599", "serial": "001"},
+		Callsign:         "W1ABC",
+		Band:             "20M",
+		Mode:             "cw", // lowercase to test case normalization
+		Timestamp:        1000,
+		SentExchange:     map[string]string{"rst": "599"},
+		ReceivedExchange: map[string]string{"rst": "599", "section": "CT"},
 	}
 
 	key1 := ContactKeyFunc(contact)

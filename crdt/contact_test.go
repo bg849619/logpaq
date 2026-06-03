@@ -7,8 +7,12 @@ func TestContactEqual(t *testing.T) {
 		Callsign: "W1AW",
 		Band:     "20m",
 		Mode:     "SSB",
-		Exchange: map[string]string{
+		SentExchange: map[string]string{
 			"class":   "2A",
+			"section": "CT",
+		},
+		ReceivedExchange: map[string]string{
+			"class":   "1A",
 			"section": "CT",
 		},
 	}
@@ -17,8 +21,12 @@ func TestContactEqual(t *testing.T) {
 		Callsign: "W1AW",
 		Band:     "20m",
 		Mode:     "SSB",
-		Exchange: map[string]string{
+		SentExchange: map[string]string{
 			"class":   "2A",
+			"section": "CT",
+		},
+		ReceivedExchange: map[string]string{
+			"class":   "1A",
 			"section": "CT",
 		},
 	}
@@ -40,8 +48,12 @@ func TestContactJSON(t *testing.T) {
 		Callsign: "W1AW",
 		Band:     "20m",
 		Mode:     "SSB",
-		Exchange: map[string]string{
+		SentExchange: map[string]string{
 			"class":   "2A",
+			"section": "CT",
+		},
+		ReceivedExchange: map[string]string{
+			"serial":  "123",
 			"section": "CT",
 		},
 		ExtensionData: map[string]string{
