@@ -1,4 +1,4 @@
-package logpaq
+package store
 
 import (
 	"encoding/json"

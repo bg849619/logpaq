@@ -20,9 +20,7 @@ CREATE TABLE IF NOT EXISTS vclock (
 
 CREATE TABLE IF NOT EXISTS peers (
     node_id      TEXT PRIMARY KEY,
-    callsign     TEXT NOT NULL,
     station_name TEXT NOT NULL,
-    last_seen    INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS metadata (
